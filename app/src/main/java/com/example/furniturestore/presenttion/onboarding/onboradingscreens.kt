@@ -2,13 +2,19 @@ package com.example.furniturestore.presenttion.onboarding
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -18,12 +24,17 @@ import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,67 +50,85 @@ import com.example.furniturestore.R
 fun OnboardingScreen() {
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         content = {
             // Image
-            Image(
-                painter = painterResource(R.drawable.mask_group),
-                contentDescription = "Phone",
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-            )
+                    .clip(RoundedCornerShape(bottomStart = 96.dp, bottomEnd = 96.dp)) // Clip first!
+                    .background(color = Color(0xFFEEEEEF)) // Now the background won't overflow
 
-            Box (modifier = Modifier.padding(horizontal = 30.dp, vertical = 30.dp)){
-                Text(
-                    buildAnnotatedString {
-                        withStyle(style = ParagraphStyle(textAlign = TextAlign.Center,
-                        )
-                        ) {
-                            withStyle(
-                                style = SpanStyle(
-                                    color = Color.Black,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 24.sp
-                                )
-                            ) {
-                                append("Transform Your Space with ")
-                            }
-                            withStyle(
-                                style = SpanStyle(
-                                    color = Color(0xFF1A5D8F),
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 24.sp
-                                )
-                            ) {
-                                append("AI & ")
-                            }
-                            withStyle(
-                                style = SpanStyle(
-                                    color = Color(0xFF1A5D8F),
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 24.sp
-                                )
-                            ) {
-                                append("AR!")
-                            }
-                        }
-                    }
+            ) {
+                // Content inside the box
+                Image(
+                    painter = painterResource(R.drawable.mask_group),
+                    contentDescription = "Phone",
+                    modifier = Modifier
+                        .fillMaxWidth()
+
                 )
-            }
 
-            // Description text
-            Text(
-                text = "Experience the future of furniture shopping—visualize, customize, and place items in your home before buying.",
-                color = Color.Black,
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 10.dp, start = 24.dp, end = 24.dp)
-            )
-            Box(modifier = Modifier.padding(end = 24.dp, top = 28.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(16.dp) // Align to top right with padding
                 ) {
+                    TextButton(
+                        onClick = { /* Handle click */ },
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp) // Align to top right with padding
+                    ) {
+                        Text("Skip", style = TextStyle(fontSize = 16.sp, color = Color(0xFF18181A)))
+                    }
+                }
+            }
+            Box (
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 68.dp)
+            ) {
+                Column (
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Column (
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            buildAnnotatedString {
+                                withStyle(
+                                    style = ParagraphStyle(textAlign = TextAlign.Center,
+                                )
+                                ) {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            color = Color.Black,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 24.sp
+                                        )
+                                    ) {
+                                        append("Transform Your")
+                                    }
+                                    withStyle(
+                                        style = SpanStyle(
+                                            color = Color(0xFF1A5D8F),
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 24.sp
+                                        )
+                                    ) {
+                                        append(" Space with \n AI & AR!")
+                                    }
+                                }
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        // Description text
+                        Text(
+                            text = "Experience the future of furniture shopping—visualize, customize, and place items in your home before buying.",
+                            color = Color.Black,
+                            fontSize = 16.sp,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
                     FloatingActionButton(
                         onClick = {
 //                            navController.navigate("OnboardingScreen2")
